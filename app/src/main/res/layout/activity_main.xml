@@ -17,13 +17,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/cardDeck"
-        android:layout_centerHorizontal="true">
+        android:layout_marginTop="378dp">
 
         <LinearLayout
             android:id="@+id/layout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="vertical" />
+            android:orientation="horizontal" />
     </HorizontalScrollView>
 
 
