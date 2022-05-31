@@ -10,14 +10,13 @@
         android:id="@+id/cardDeck"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
         app:srcCompat="@drawable/ace_of_clubs" />
 
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/cardDeck"
-        android:layout_marginTop="378dp">
+        android:layout_marginTop="135dp">
 
         <LinearLayout
             android:id="@+id/layout"

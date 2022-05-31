@@ -83,15 +83,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ImageView imageView = new ImageView(MainActivity.this);
-                imageView.setImageResource(R.drawable.ace_of_clubs);
+                cardRandom(imageView);
 
-                addView(imageView, 200, 200);
+                addView(imageView, 150, 150);
             }
         });
     }
 
     public void cardRandom(ImageView imageView){
-
+        int randomIndex = (int)(Math.random() * mImages.length - 1);
+        imageView.setImageResource(mImages[randomIndex]);
     }
 
     public void addView(ImageView imageView, int width, int height){
