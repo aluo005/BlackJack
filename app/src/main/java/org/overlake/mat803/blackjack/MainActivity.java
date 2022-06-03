@@ -16,11 +16,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding mBinding;
-    List<Pair<Integer, Integer>> cardImages;
+    Stack<Card> cardImages;
     private int currIndex;
 
     @Override
@@ -28,67 +29,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mBinding = ActivityMainBinding.inflate(getLayoutInflater());
         currIndex = 0;
-         cardImages = new ArrayList<>(
-                Arrays.asList(
-                        new Pair(R.drawable.jack_of_clubs2, 10),
-                        new Pair(R.drawable.jack_of_diamonds2, 10),
-                        new Pair(R.drawable.jack_of_hearts2, 10),
-                        new Pair(R.drawable.jack_of_spades2, 10),
-                        new Pair(R.drawable.king_of_clubs2, 10),
-                        new Pair(R.drawable.king_of_diamonds2, 10),
-                        new Pair(R.drawable.king_of_hearts2, 10),
-                        new Pair(R.drawable.king_of_spades2, 10),
-                        new Pair(R.drawable.nine_of_clubs, 9),
-                        new Pair(R.drawable.nine_of_diamonds, 9),
-                        new Pair(R.drawable.nine_of_hearts, 9),
-                        new Pair(R.drawable.nine_of_spades, 9),
-                        new Pair(R.drawable.queen_of_clubs2, 10),
-                        new Pair(R.drawable.queen_of_diamonds2, 10),
-                        new Pair(R.drawable.queen_of_hearts2, 10),
-                        new Pair(R.drawable.queen_of_spades2, 10),
-                        new Pair(R.drawable.seven_of_clubs, 7),
-                        new Pair(R.drawable.seven_of_diamonds, 7),
-                        new Pair(R.drawable.seven_of_hearts, 7),
-                        new Pair(R.drawable.seven_of_spades, 7),
-                        new Pair(R.drawable.six_of_clubs, 6),
-                        new Pair(R.drawable.six_of_diamonds, 6),
-                        new Pair(R.drawable.six_of_hearts, 6),
-                        new Pair(R.drawable.six_of_spades, 6),
-                        new Pair(R.drawable.ten_of_clubs, 10),
-                        new Pair(R.drawable.ten_of_diamonds, 10),
-                        new Pair(R.drawable.ten_of_hearts, 10),
-                        new Pair(R.drawable.ten_of_spades, 10),
-                        new Pair(R.drawable.three_of_clubs, 3),
-                        new Pair(R.drawable.three_of_diamonds, 3),
-                        new Pair(R.drawable.three_of_hearts, 3),
-                        new Pair(R.drawable.three_of_spades, 3),
-                        new Pair(R.drawable.two_of_clubs, 2),
-                        new Pair(R.drawable.two_of_diamonds, 2),
-                        new Pair(R.drawable.two_of_hearts, 2),
-                        new Pair(R.drawable.two_of_spades, 2),
-                        new Pair(R.drawable.ace_of_clubs, 1),
-                        new Pair(R.drawable.ace_of_diamonds, 1),
-                        new Pair(R.drawable.ace_of_hearts, 1),
-                        new Pair(R.drawable.ace_of_spades2, 1),
-                        new Pair(R.drawable.eight_of_clubs, 8),
-                        new Pair(R.drawable.eight_of_diamonds, 8),
-                        new Pair(R.drawable.eight_of_hearts, 8),
-                        new Pair(R.drawable.eight_of_spades, 8),
-                        new Pair(R.drawable.five_of_clubs, 5),
-                        new Pair(R.drawable.five_of_diamonds, 5),
-                        new Pair(R.drawable.five_of_hearts, 5),
-                        new Pair(R.drawable.five_of_spades, 5),
-                        new Pair(R.drawable.four_of_clubs, 4),
-                        new Pair(R.drawable.four_of_diamonds, 4),
-                        new Pair(R.drawable.four_of_hearts, 4),
-                        new Pair(R.drawable.four_of_spades, 4)
-                ));
+        cardImages = new Stack<Card>();
+        resetStack();
         setContentView(mBinding.getRoot());
 
         Collections.shuffle(cardImages);
 
         FragmentManager fm = getSupportFragmentManager();
-        PlayerCardFragment playerFragment = PlayerCardFragment.newInstance(cardImages.get(currIndex).first, cardImages.get(currIndex).second);
+        PlayerCardFragment playerFragment = PlayerCardFragment.newInstance(cardImages.get(currIndex).cardName, cardImages.get(currIndex).cardValue);
         fm.beginTransaction()
                 .add(R.id.fragmentContainerView, playerFragment)
                 .commit();
@@ -103,14 +51,66 @@ public class MainActivity extends AppCompatActivity {
         mBinding.reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                currIndex = 0;
+                resetStack();
                 Collections.shuffle(cardImages);
             }
         });
     }
 
-    public Pair<Integer, Integer> getCardArrayValue(int index){
-        return cardImages.get(index);
+    public void resetStack(){
+        cardImages.clear();
+        cardImages.push(new Card(R.drawable.jack_of_clubs2, 10));
+        cardImages.push(new Card(R.drawable.jack_of_diamonds2, 10));
+        cardImages.push(new Card(R.drawable.jack_of_hearts2, 10));
+        cardImages.push(new Card(R.drawable.jack_of_spades2, 10));
+        cardImages.push(new Card(R.drawable.king_of_clubs2, 10));
+        cardImages.push(new Card(R.drawable.king_of_diamonds2, 10));
+        cardImages.push(new Card(R.drawable.king_of_hearts2, 10));
+        cardImages.push(new Card(R.drawable.king_of_spades2, 10));
+        cardImages.push(new Card(R.drawable.nine_of_clubs, 9));
+        cardImages.push(new Card(R.drawable.nine_of_diamonds, 9));
+        cardImages.push(new Card(R.drawable.nine_of_hearts, 9));
+        cardImages.push(new Card(R.drawable.nine_of_spades, 9));
+        cardImages.push(new Card(R.drawable.queen_of_clubs2, 10));
+        cardImages.push(new Card(R.drawable.queen_of_diamonds2, 10));
+        cardImages.push(new Card(R.drawable.queen_of_hearts2, 10));
+        cardImages.push(new Card(R.drawable.queen_of_spades2, 10));
+        cardImages.push(new Card(R.drawable.seven_of_clubs, 7));
+        cardImages.push(new Card(R.drawable.seven_of_diamonds, 7));
+        cardImages.push(new Card(R.drawable.seven_of_hearts, 7));
+        cardImages.push(new Card(R.drawable.seven_of_spades, 7));
+        cardImages.push(new Card(R.drawable.six_of_clubs, 6));
+        cardImages.push(new Card(R.drawable.six_of_diamonds, 6));
+        cardImages.push(new Card(R.drawable.six_of_hearts, 6));
+        cardImages.push(new Card(R.drawable.six_of_spades, 6));
+        cardImages.push(new Card(R.drawable.ten_of_clubs, 10));
+        cardImages.push(new Card(R.drawable.ten_of_diamonds, 10));
+        cardImages.push(new Card(R.drawable.ten_of_hearts, 10));
+        cardImages.push(new Card(R.drawable.ten_of_spades, 10));
+        cardImages.push(new Card(R.drawable.three_of_clubs, 3));
+        cardImages.push(new Card(R.drawable.three_of_diamonds, 3));
+        cardImages.push(new Card(R.drawable.three_of_hearts, 3));
+        cardImages.push(new Card(R.drawable.three_of_spades, 3));
+        cardImages.push(new Card(R.drawable.two_of_clubs, 2));
+        cardImages.push(new Card(R.drawable.two_of_diamonds, 2));
+        cardImages.push(new Card(R.drawable.two_of_hearts, 2));
+        cardImages.push(new Card(R.drawable.two_of_spades, 2));
+        cardImages.push(new Card(R.drawable.ace_of_clubs, 1));
+        cardImages.push(new Card(R.drawable.ace_of_diamonds, 1));
+        cardImages.push(new Card(R.drawable.ace_of_hearts, 1));
+        cardImages.push(new Card(R.drawable.ace_of_spades2, 1));
+        cardImages.push(new Card(R.drawable.eight_of_clubs, 8));
+        cardImages.push(new Card(R.drawable.eight_of_diamonds, 8));
+        cardImages.push(new Card(R.drawable.eight_of_hearts, 8));
+        cardImages.push(new Card(R.drawable.eight_of_spades, 8));
+        cardImages.push(new Card(R.drawable.five_of_clubs, 5));
+        cardImages.push(new Card(R.drawable.five_of_diamonds, 5));
+        cardImages.push(new Card(R.drawable.five_of_hearts, 5));
+        cardImages.push(new Card(R.drawable.five_of_spades, 5));
+        cardImages.push(new Card(R.drawable.four_of_clubs, 4));
+        cardImages.push(new Card(R.drawable.four_of_diamonds, 4));
+        cardImages.push(new Card(R.drawable.four_of_hearts, 4));
+        cardImages.push(new Card(R.drawable.four_of_spades, 4));
     }
 
 }

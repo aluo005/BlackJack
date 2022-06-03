@@ -27,6 +27,7 @@ public class PlayerCardFragment extends Fragment {
     private int[] mImages;
 
 
+
     public PlayerCardFragment() {
         // Required empty public constructor
     }
