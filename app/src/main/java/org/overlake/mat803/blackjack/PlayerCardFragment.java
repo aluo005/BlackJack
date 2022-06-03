@@ -2,8 +2,10 @@ package org.overlake.mat803.blackjack;
 
 import android.os.Bundle;
 
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +15,10 @@ import android.widget.LinearLayout;
 import org.overlake.mat803.blackjack.databinding.FragmentPlayerCardBinding;
 
 public class PlayerCardFragment extends Fragment {
+
+    public static final String CURRENT_CARD = "current_card";
+    public static final String CURRENT_CARD_VALUE = "current_card_value";
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -25,6 +31,14 @@ public class PlayerCardFragment extends Fragment {
         // Required empty public constructor
     }
 
+    public static PlayerCardFragment newInstance(Integer currCard, Integer currCardValue) {
+        PlayerCardFragment fragment = new PlayerCardFragment();
+        Bundle args = new Bundle();
+        args.putInt(CURRENT_CARD, currCard);
+        args.putInt(CURRENT_CARD_VALUE, currCardValue);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,13 +115,10 @@ public class PlayerCardFragment extends Fragment {
 
     public void addCard() {
         ImageView imageView = new ImageView(getActivity());
-        cardRandom(imageView);
+        if(getArguments() != null) {
+            imageView.setImageResource(getArguments().getInt(CURRENT_CARD));
+        }
         addView(imageView, 150, 150);
-    }
-
-    public void cardRandom(ImageView imageView){
-        int randomIndex = (int)(Math.random() * mImages.length - 1);
-        imageView.setImageResource(mImages[randomIndex]);
     }
 
     public void addView(ImageView imageView, int width, int height){
