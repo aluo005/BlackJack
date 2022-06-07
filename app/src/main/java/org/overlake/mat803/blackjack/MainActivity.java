@@ -36,9 +36,11 @@ public class MainActivity extends AppCompatActivity {
         Collections.shuffle(cardImages);
 
         FragmentManager fm = getSupportFragmentManager();
-        PlayerCardFragment playerFragment = PlayerCardFragment.newInstance(cardImages.get(currIndex).cardName, cardImages.get(currIndex).cardValue);
+        PlayerCardFragment playerFragment = PlayerCardFragment.newInstance(cardImages);
+        DealerCardFragment dealerFragment = DealerCardFragment.newInstance(cardImages);
         fm.beginTransaction()
                 .add(R.id.fragmentContainerView, playerFragment)
+                .add(R.id.fragmentContainerView2, dealerFragment)
                 .commit();
 
         mBinding.hit.setOnClickListener(new View.OnClickListener() {
@@ -51,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         mBinding.reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                playerFragment.removeView();
+                dealerFragment.resetDeck();
                 resetStack();
                 Collections.shuffle(cardImages);
             }

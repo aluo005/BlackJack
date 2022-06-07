@@ -2,42 +2,37 @@ package org.overlake.mat803.blackjack;
 
 import android.os.Bundle;
 
-import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import org.overlake.mat803.blackjack.databinding.FragmentDealerCardBinding;
 import org.overlake.mat803.blackjack.databinding.FragmentPlayerCardBinding;
 
 import java.util.Stack;
 
-public class PlayerCardFragment extends Fragment {
+public class DealerCardFragment extends Fragment {
 
-    public static final String CURRENT_CARD = "current_card";
-    public static final String CURRENT_CARD_VALUE = "current_card_value";
+    private static final String CURRENT_CARD_ARRANGEMENT = "current_card_arrangement";
 
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-    private FragmentPlayerCardBinding mBinding;
+    private FragmentDealerCardBinding mBinding;
     private Stack<Card> cardImages;
+    private Card mysteryCardValue;
+    private int sum;
     private ImageView imageView;
 
-
-    public PlayerCardFragment() {
+    public DealerCardFragment() {
         // Required empty public constructor
     }
 
-    public static PlayerCardFragment newInstance(Stack<Card> images) {
-        PlayerCardFragment fragment = new PlayerCardFragment();
+    public static DealerCardFragment newInstance(Stack<Card> images) {
+        DealerCardFragment fragment = new DealerCardFragment();
         Bundle args = new Bundle();
-        args.putSerializable(CURRENT_CARD, images);
+        args.putSerializable(CURRENT_CARD_ARRANGEMENT, images);
         fragment.setArguments(args);
         return fragment;
     }
@@ -45,25 +40,36 @@ public class PlayerCardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        mBinding = FragmentPlayerCardBinding.inflate(getLayoutInflater());
+        mBinding = FragmentDealerCardBinding.inflate(getLayoutInflater());
+        sum = 0;
         if(getArguments() != null) {
-            cardImages = (Stack<Card>) getArguments().getSerializable(CURRENT_CARD);
+            cardImages = (Stack<Card>) getArguments().getSerializable(CURRENT_CARD_ARRANGEMENT);
         }
-        addCard();
+        addMysteryCard();
         addCard();
         return mBinding.getRoot();
+    }
+
+    public void dealerTurn(){
+
     }
 
     public void addCard() {
         imageView = new ImageView(getActivity());
         imageView.setImageResource(cardImages.peek().cardName);
+        cardImages.pop();
+        addView(imageView, 200, 200);
+    }
+
+    public void addMysteryCard() {
+        imageView = new ImageView(getActivity());
+        imageView.setImageResource(R.drawable.card_face_down3);
+        mysteryCardValue = cardImages.peek();
         cardImages.pop();
         addView(imageView, 200, 200);
     }
@@ -76,9 +82,9 @@ public class PlayerCardFragment extends Fragment {
         mBinding.layout.addView(imageView);
     }
 
-    public void removeView(){
+    public void resetDeck(){
         mBinding.layout.removeAllViews();
-        addCard();
+        addMysteryCard();
         addCard();
     }
 }
